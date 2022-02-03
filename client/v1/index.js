@@ -20,15 +20,11 @@ console.log(MY_FAVORITE_BRANDS[0]);
 const Number_Of_Product = marketplace.length;
 console.log(Number_Of_Product);
 
-const Brands_name = [];
-for (let i = 0; i < marketplace.length; i++) {
-  Brands_name.push(marketplace[i].name);
-}
-console.log(Brands_name);
-const unique = (value, index, self) => {
-  return self.indexOf(value) === index
-}
-console.log(Brands_name.filter(unique).length)
+var brandnames = []
+marketplace.forEach(obj=>brandnames.push(obj.brand))
+console.log(brandnames)
+var uniquebrandnames = new Set(brandnames)
+console.log(uniquebrandnames.size)
 
 
 // 🎯 TODO: Sort by price
@@ -89,6 +85,14 @@ console.log(price_sum/marketplace.length)
 //
 // 2. Log the variable
 // 3. Log the number of products by brands
+
+var brands = {}
+uniquebrandnames.forEach(element => brands[element] = []) // We create the keys
+marketplace.forEach(elem => brands[elem.brand].push(elem)) // We then fill the list linked to each key
+console.log(brands)
+for (const [key, value] of Object.entries(brands)) {
+  console.log(key, brands[key].length);
+}
 
 
 // 🎯 TODO: Sort by price for each brand
