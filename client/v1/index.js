@@ -25,6 +25,10 @@ for (let i = 0; i < marketplace.length; i++) {
   Brands_name.push(marketplace[i].name);
 }
 console.log(Brands_name);
+const unique = (value, index, self) => {
+  return self.indexOf(value) === index
+}
+console.log(Brands_name.filter(unique).length)
 
 
 // 🎯 TODO: Brands name
