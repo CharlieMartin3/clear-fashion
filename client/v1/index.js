@@ -31,27 +31,29 @@ const unique = (value, index, self) => {
 console.log(Brands_name.filter(unique).length)
 
 
-// 🎯 TODO: Brands name
-// 1. Create a variable and assign it the list of brands name only
-// 2. Log the variable
-// 3. Log how many brands we have
-
-
 // 🎯 TODO: Sort by price
-// 1. Create a function to sort the marketplace products by price
-// 2. Create a variable and assign it the list of products by price from lowest to highest
-// 3. Log the variable
+let PriceSorte = (arr)=>{
+  return arr.sort((a,b)=>(a.price-b.price))
+}
+const marketplaceSorted = PriceSorte(marketplace)
+console.log("Sorted marketplace by price:",marketplaceSorted)
+
 
 
 // 🎯 TODO: Sort by date
-// 1. Create a function to sort the marketplace objects by products date
-// 2. Create a variable and assign it the list of products by date from recent to old
-// 3. Log the variable
+let DateSorte = (marketplace)=>{
+  return  marketplace.sort((a,b)=>(new Date(a.date) - new Date(b.date)))
+}
+const marketplaceSortedDate = DateSorte(marketplace)
+console.log("Sorted marketplace by date:",marketplaceSortedDate)
 
 
 // 🎯 TODO: Filter a specific price range
-// 1. Filter the list of products between 50€ and 100€
-// 2. Log the list
+let FilterPriceRange = (marketplace, min, max) =>{
+  return marketplace.filter(function(element) { return element.price > min && element.price < max} )
+}
+const marketplaceFiltered = FilterPriceRange(marketplace, 50, 100)
+console.log("filtered marketplace:",marketplaceFiltered)
 
 
 // 🎯 TODO: Average price
