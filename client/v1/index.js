@@ -59,8 +59,11 @@ console.log("filtered marketplace:",marketplaceFiltered)
 // 🎯 TODO: Average price
 // 1. Determine the average price of the marketplace
 // 2. Log the average
-
-
+var prices = []
+marketplace.forEach(obj=>prices.push(obj.price))
+const somme = (previousValue, currentValue) => previousValue + currentValue;
+var price_sum = prices.reduce(somme);
+console.log(price_sum/marketplace.length)
 
 
 
