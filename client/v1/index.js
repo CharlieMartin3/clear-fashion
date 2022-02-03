@@ -17,37 +17,14 @@ const MY_FAVORITE_BRANDS = [{
 console.table(MY_FAVORITE_BRANDS);
 console.log(MY_FAVORITE_BRANDS[0]);
 
+const Number_Of_Product = marketplace.length;
+console.log(Number_Of_Product);
 
-
-/**
- * 🌱
- * Let's go with a very very simple first todo
- * Keep pushing
- * 🌱
- */
-
-// 🎯 TODO: The cheapest t-shirt
-// 0. I have 3 favorite brands stored in MY_FAVORITE_BRANDS variable
-// 1. Create a new variable and assign it the link of the cheapest t-shirt
-// I can find on these e-shops
-// 2. Log the variable
-
-
-
-
-
-/**
- * 👕
- * Easy 😁?
- * Now we manipulate the variable `marketplace`
- * `marketplace` is a list of products from several brands e-shops
- * The variable is loaded by the file data.js
- * 👕
- */
-
-// 🎯 TODO: Number of products
-// 1. Create a variable and assign it the number of products
-// 2. Log the variable
+const Brands_name = [];
+for (let i = 0; i < marketplace.length; i++) {
+  Brands_name.push(marketplace[i].name);
+}
+console.log(Brands_name);
 
 
 // 🎯 TODO: Brands name
