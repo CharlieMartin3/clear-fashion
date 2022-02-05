@@ -131,7 +131,9 @@ console.log(brands_sorted_date);
 // 1. Compute the p90 price value of each brand
 // The p90 value (90th percentile) is the lower value expected to be exceeded in 90% of the products
 
-
+for(var obj in brands_sorted_price){
+  console.log(obj, brands_sorted_price[obj][Math.round(brands_sorted_price[obj].length*0.1)].price);
+} 
 
 
 
@@ -207,10 +209,25 @@ const COTELE_PARIS = [
 // // 1. Log if we have new products only (true or false)
 // // A new product is a product `released` less than 2 weeks.
 
+var newProduct =false;
+var date = new Date()
+date.setDate(date.getDate()-15);
+
+COTELE_PARIS.forEach(obj => (obj.date < date)? reasonablePriceShop = true:null)
+
+console.log(newProduct);
+
 
 // 🎯 TODO: Reasonable price
 // // 1. Log if coteleparis is a reasonable price shop (true or false)
 // // A reasonable price if all the products are less than 100€
+
+var reasonablePriceShop =true;
+var reasonablePrice=100;
+
+COTELE_PARIS.forEach(obj => (obj.price > 100)? reasonablePriceShop = false:null)
+
+console.log(reasonablePriceShop);
 
 
 // 🎯 TODO: Find a specific product
