@@ -55,7 +55,7 @@ console.log("filtered marketplace:",marketplaceFiltered)
 // 🎯 TODO: Average price
 // 1. Determine the average price of the marketplace
 // 2. Log the average
-var prices = []
+var prices = [];
 marketplace.forEach(obj=>prices.push(obj.price))
 const somme = (previousValue, currentValue) => previousValue + currentValue;
 var price_sum = prices.reduce(somme);
@@ -99,12 +99,24 @@ for (const [key, value] of Object.entries(brands)) {
 // 1. For each brand, sort the products by price, from highest to lowest
 // 2. Log the sort
 
+let brands_sorted_price = {...brands} //we create a clone right there
+for(var obj in brands_sorted_price){
+  brands_sorted_price[obj] = PriceSorte(brands_sorted_price[obj]); //we sorte the price 
+}
+
+console.log(brands_sorted_price);
+
 
 // 🎯 TODO: Sort by date for each brand
 // 1. For each brand, sort the products by date, from old to recent
 // 2. Log the sort
 
+let brands_sorted_date = {...brands}
+for(var obj in brands_sorted_date){
+  brands_sorted_date[obj]=DateSorte(brands_sorted_date[obj]);
+}
 
+console.log(brands_sorted_date);
 
 
 
