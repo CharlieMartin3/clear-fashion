@@ -234,10 +234,16 @@ console.log(reasonablePriceShop);
 // 1. Find the product with the uuid `b56c6d88-749a-5b4c-b571-e5b5c6483131`
 // 2. Log the product
 
+var product;
+COTELE_PARIS.forEach(obj=> (obj.uuid==`b56c6d88-749a-5b4c-b571-e5b5c6483131`)? product = obj:null)
+console.log(product)
 
 // 🎯 TODO: Delete a specific product
 // 1. Delete the product with the uuid `b56c6d88-749a-5b4c-b571-e5b5c6483131`
 // 2. Log the new list of product
+
+COTELE_PARIS.forEach((obj,i)=> (obj.uuid==`b56c6d88-749a-5b4c-b571-e5b5c6483131`)? COTELE_PARIS.splice(i,1):null)
+console.log("Updated list:",COTELE_PARIS)
 
 // 🎯 TODO: Save the favorite product
 let blueJacket = {
@@ -255,6 +261,11 @@ jacket.favorite = true;
 // 1. Log `blueJacket` and `jacket` variables
 // 2. What do you notice?
 
+console.log(blueJacket)
+console.log(jacket)
+
+//they both updated !!!
+
 blueJacket = {
   'link': 'https://coteleparis.com/collections/tous-les-produits-cotele/products/la-veste-bleu-roi',
   'price': 110,
@@ -263,7 +274,11 @@ blueJacket = {
 
 // 3. Update `jacket` property with `favorite` to true WITHOUT changing blueJacket properties
 
+jacket = {...blueJacket};
+jacket.favorite = true;
 
+console.log("Updated Jacket:",jacket);
+console.log("BlueJacket:",blueJacket);
 
 
 
