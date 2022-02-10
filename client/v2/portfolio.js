@@ -139,7 +139,18 @@ selectSort.addEventListener('change', event => {
   if(event.target.value == "date-asc"){
     renderProducts(GetProductsByDate(1))
   }
-  else{
+  else if(event.target.value == "date-desc"){
+    renderProducts(GetProductsByDate(-1))
+  }
+  else if(event.target.value == "price-asc")
+  {
+    renderProducts(GetProductsByPrice(1))
+  }
+  else if(event.target.value == "price-desc"){
+    renderProducts(GetProductsByPrice(-1))
+  }
+  else
+  {
     fetchProducts(currentPagination.currentPage, selectShow.value)
     .then(setCurrentProducts)
     .then(() => render(currentProducts, currentPagination));
@@ -173,6 +184,17 @@ function GetProductsByDate(order) {
   else
   {
     return currentProducts.sort((a,b)=>(new Date(b.released)-new Date(a.released)));
+  }
+}
+
+function GetProductsByPrice(order) {
+  let brandProducts = [];
+  if(order == 1){ //ascendant
+    return currentProducts.sort((a,b)=>(a.price-b.price));
+  }
+  else
+  {
+    return currentProducts.sort((a,b)=>(b.price-a.price));
   }
 }
 
