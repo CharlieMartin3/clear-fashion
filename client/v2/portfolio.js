@@ -9,6 +9,7 @@ let currentPagination = {};
 const selectShow = document.querySelector('#show-select');
 const selectPage = document.querySelector('#page-select');
 const selectBrand = document.querySelector('#brand-select');
+const selectSort = document.querySelector('#sort-select');
 const sectionProducts = document.querySelector('#products');
 const spanNbProducts = document.querySelector('#nbProducts');
 
@@ -134,6 +135,16 @@ selectBrand.addEventListener('change', event => {
   }
 });
 
+selectSort.addEventListener('change', event => {
+  if(event.target.value == "date-asc"){
+    renderProducts(GetProductsByDate(1))
+  }
+  else{
+    fetchProducts(currentPagination.currentPage, selectShow.value)
+    .then(setCurrentProducts)
+    .then(() => render(currentProducts, currentPagination));
+  }
+});
 
 
 document.addEventListener('DOMContentLoaded', () =>
@@ -145,15 +156,24 @@ document.addEventListener('DOMContentLoaded', () =>
 
 
 function GetProductsByBrand(brandName) {
-  console.log("yessir")
   let brandProducts = [];
   for (let i = 0; i < currentProducts.length; i++) {
       if (currentProducts[i].brand == brandName) {
-        console.log("yessir")
           brandProducts.push(currentProducts[i]);
       }
   }
   return brandProducts;
+}
+
+function GetProductsByDate(order) {
+  let brandProducts = [];
+  if(order == 1){ //ascendant
+    return currentProducts.sort((a,b)=>(new Date(a.released)-new Date(b.released)));
+  }
+  else
+  {
+    return currentProducts.sort((a,b)=>(new Date(b.released)-new Date(a.released)));
+  }
 }
 
 
