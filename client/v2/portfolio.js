@@ -122,19 +122,18 @@ selectPage.addEventListener('change', event => {
     .then(() => render(currentProducts, currentPagination));
 });
 
-/*
+
 selectBrand.addEventListener('change', event => {
   if(event.target.value == "all"){
-    const products = await fetchProducts(currentPagination.currentPage, selectShow.value);
-    setCurrentProducts(products);
-    render(currentProducts, currentPagination);
-
+    fetchProducts(currentPagination.currentPage, selectShow.value)
+    .then(setCurrentProducts)
+    .then(() => render(currentProducts, currentPagination));
   }
   else{
     renderProducts(GetProductsByBrand(event.target.value))
   }
 });
-*/
+
 
 
 document.addEventListener('DOMContentLoaded', () =>
@@ -146,9 +145,11 @@ document.addEventListener('DOMContentLoaded', () =>
 
 
 function GetProductsByBrand(brandName) {
+  console.log("yessir")
   let brandProducts = [];
   for (let i = 0; i < currentProducts.length; i++) {
       if (currentProducts[i].brand == brandName) {
+        console.log("yessir")
           brandProducts.push(currentProducts[i]);
       }
   }
