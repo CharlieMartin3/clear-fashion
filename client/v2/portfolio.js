@@ -12,6 +12,7 @@ const selectBrand = document.querySelector('#brand-select');
 const selectSort = document.querySelector('#sort-select');
 const sectionProducts = document.querySelector('#products');
 const spanNbProducts = document.querySelector('#nbProducts');
+const spanNbNewProducts = document.querySelector('#nbNewProducts');
 
 /**
  * Set global value
@@ -47,6 +48,39 @@ const fetchProducts = async (page = 1, size = 12) => {
     return {currentProducts, currentPagination};
   }
 };
+
+
+let FilterDateRange = (marketplace,max) =>{
+  return marketplace.filter(function(element) { return new Date(element.released) < max} )
+}
+
+var twoweeks = new Date()
+twoweeks.setDate(twoweeks.getDate()-15);
+
+
+const newProducts = async() => {
+  try {
+    const response = await fetch(
+      `https://clear-fashion-api.vercel.app?`
+    );
+    const body = await response.json();
+
+    if (body.success !== true) {
+      console.error(body);
+      return {currentProducts, currentPagination};
+    }
+
+    const newProduct = FilterDateRange(body.data, twoweeks)
+
+    return newProduct;
+  } catch (error) {
+    console.error(error);
+    return {currentProducts, currentPagination};
+  }
+};
+
+
+
 
 /**
  * Render list of products
@@ -94,8 +128,10 @@ const renderPagination = pagination => {
  */
 const renderIndicators = pagination => {
   const {count} = pagination;
+  const newProduct = newProducts()
 
   spanNbProducts.innerHTML = count;
+  spanNbNewProducts.innerHTML = newProduct.length();
 };
 
 const render = (products, pagination) => {
