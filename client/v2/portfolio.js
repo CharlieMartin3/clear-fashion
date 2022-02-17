@@ -13,6 +13,9 @@ const selectSort = document.querySelector('#sort-select');
 const sectionProducts = document.querySelector('#products');
 const spanNbProducts = document.querySelector('#nbProducts');
 const spanNbNewProducts = document.querySelector('#nbNewProducts');
+const p90 = document.querySelector('#p90');
+const p50 = document.querySelector('#p50');
+const p95 = document.querySelector('#p95');
 
 /**
  * Set global value
@@ -50,45 +53,42 @@ const fetchProducts = async (page = 1, size = 12) => {
 };
 
 
-let FilterDateRange = (marketplace,max) =>{
-  return marketplace.filter(function(element) { return new Date(element.released) < max} )
-}
-
-var twoweeks = new Date()
-twoweeks.setDate(twoweeks.getDate()-15);
-
-
-const newProducts = async() => {
-  try {
-    const response = await fetch(
-      `https://clear-fashion-api.vercel.app?`
-    );
-    const body = await response.json();
-
-    if (body.success !== true) {
-      console.error(body);
-      return {currentProducts, currentPagination};
-    }
-
-    const newProduct = FilterDateRange(body.data, twoweeks)
-
-    return newProduct;
-  } catch (error) {
-    console.error(error);
-    return {currentProducts, currentPagination};
-  }
+const filterByReleased = (products) => {
+  return products.filter((product) => {
+    const one_day = 24 * 60 * 60 * 1000;
+    const diff = (new Date() - new Date(product.released)) / one_day;
+    if (diff < 15) return product;
+  });
 };
 
 
-
+const getP = (products, pVal) => {
+  let sortedProducts = products.slice();
+  sortedProducts.sort((p1, p2) =>
+    p1.price < p2.price ? 1 : p1.price === p2.price ? 0 : -1
+  );
+  const n = Math.floor(sortedProducts.length * (pVal / 100));
+  return sortedProducts[n].price;
+};
 
 /**
  * Render list of products
  * @param  {Array} products
  */
 const renderProducts = products => {
+
+  //let toDisplay = checkFavoriteProducts.checked ? Object.values(favorites) : products;
+  //toDisplay = currentBrand == "all" ? toDisplay : GetProductsByBrand(toDisplay)[currentBrand];
+
   const fragment = document.createDocumentFragment();
   const div = document.createElement('div');
+
+  const newProducts = filterByReleased(products);
+  spanNbNewProducts.innerHTML = newProducts.length;
+  //pP50.innerHTML = getP(products, 50) + "€";
+  //pP90.innerHTML = getP(products, 90) + "€";
+  //pP95.innerHTML = getP(products, 95) + "€";
+
   const template = products
     .map(product => {
       return `
@@ -128,10 +128,9 @@ const renderPagination = pagination => {
  */
 const renderIndicators = pagination => {
   const {count} = pagination;
-  const newProduct = newProducts()
 
   spanNbProducts.innerHTML = count;
-  spanNbNewProducts.innerHTML = newProduct.length();
+  
 };
 
 const render = (products, pagination) => {
