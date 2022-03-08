@@ -1,8 +1,9 @@
 /* eslint-disable no-console, no-process-exit */
 const dedicatedbrand = require('./sources/dedicatedbrand');
 const montlimartbrand = require('./sources/montlimartbrand');
-
-async function sandbox (eshop = 'https://www.dedicatedbrand.com/en/men/news') {
+//https://www.montlimart.com/toute-la-collection.html
+//https://www.dedicatedbrand.com/en/men/news
+async function sandbox (eshop = 'https://www.montlimart.com/toute-la-collection.html') {
   try {
     console.log(`🕵️‍♀️  browsing ${eshop} source`);
 
