@@ -44,8 +44,8 @@ async function sandbox () {
     //console.log(results);
     console.log(results.flat());
 
-    products.push(results.flat());
-    products = products.flat();
+    //products.push(results.flat());
+    //products = products.flat();
 
     console.log('\n');
 
