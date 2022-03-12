@@ -41,7 +41,7 @@ async function sandbox () {
     console.log(`👕 ${results.length} results of promises found`);
     console.log(`👕 ${results.flat().length} products found`);
 
-    console.log(results);
+    //console.log(results);
     console.log(results.flat());
 
     products.push(results.flat());
@@ -65,6 +65,17 @@ async function sandbox () {
 
     console.log(`👕 ${loomOnly.length} total of products found for Loom`);
     console.log(loomOnly);
+
+    // price lower than 50
+    const price='price';
+    const produits2 = await db.find({'price':{$lt:50}});
+    console.log('Price lower than 50');
+    console.log(produits2);
+
+   //sorted product
+    const sorted = await db.sort({}, {'price':1});
+    console.log("👕 ${sorted.length} total of products sorted by price");
+    console.log(sorted);
 
     db.close();
   } catch (e) {
