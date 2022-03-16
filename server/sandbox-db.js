@@ -1,9 +1,7 @@
-/* eslint-disable no-console, no-process-exit */
 const dedicatedbrand = require('./sites/dedicatedbrand');
 const loom = require('./sites/loom');
 const db = require('./db');
 const {getDB} = require("./db");
-const db2 = getDB();
 
 async function sandbox () {
   try {
@@ -44,8 +42,8 @@ async function sandbox () {
     //console.log(results);
     console.log(results.flat());
 
-    //products.push(results.flat());
-    //products = products.flat();
+    products.push(results.flat());
+    products = products.flat();
 
     console.log('\n');
 

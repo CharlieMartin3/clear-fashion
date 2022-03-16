@@ -1,6 +1,7 @@
 const cors = require('cors');
 const express = require('express');
 const helmet = require('helmet');
+const db = require('./db');
 
 const PORT = 8092;
 
@@ -21,3 +22,52 @@ app.get('/', (request, response) => {
 app.listen(PORT);
 
 console.log(`📡 Running on port ${PORT}`);
+
+
+//ENDPOINTS 1 
+//Search product by id
+app.get('/products/id/:id', (request, response) => {
+
+  product = db.find({'_id': request.params.id});
+  product.then((value) => {
+    response.send({'id' : request.params.id,
+                 'product': value});
+  })
+  
+});
+
+
+
+//ENDPOINTS 2
+// request contain limit (if not we put 10), brand and price
+app.get('/products/search', (request, response) => {
+
+  let limit = request.query.limit
+  let brand = request.query.brand
+  let price = request.query.price
+
+  if(limit == null) {limit = 10}
+
+  product = []
+  if(brand && price){
+    product = db.limit({'brand' : brand, 'price' : {$lt : parseInt(price)}}, parseInt(limit))
+  }
+  else if(brand == null && price == null){
+    product = db.limit({}, parseInt(limit))
+  }
+  else if(brand == null && price != null){
+    product = db.limit({'price' : {$lt : parseInt(price)}}, parseInt(limit))
+  }
+  else if(brand != null && price == null){
+    product = db.limit({'brand' : brand}, parseInt(limit))
+  }
+
+  product.then((value) => {
+    response.send({'limit' : limit,
+                 'brand' : brand,
+                 'price' : price,
+                 'product' : value});
+  })
+  
+
+});
