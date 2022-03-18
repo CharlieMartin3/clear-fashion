@@ -26,7 +26,7 @@ console.log(`📡 Running on port ${PORT}`);
 
 //ENDPOINTS 1 
 //Search product by id
-app.get('/products/id/:id', (request, response) => {
+app.get('/products/:id', (request, response) => {
 
   product = db.find({'_id': request.params.id});
   product.then((value) => {

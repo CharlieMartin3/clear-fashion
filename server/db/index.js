@@ -20,7 +20,7 @@ const getDB = module.exports.getDB = async () => {
       console.log('💽  Already Connected');
       return database;
     }
-
+    //console.log(MongoClient)
     client = await MongoClient.connect(MONGODB_URI, {'useNewUrlParser': true});
     database = client.db(MONGODB_DB_NAME);
 
@@ -97,6 +97,7 @@ module.exports.limit = async (find_query, limit_query) => {
   try {
     const db = await getDB();
     const collection = db.collection(MONGODB_COLLECTION);
+    console.log(collection)
     const result = await collection.find(find_query).sort(limit_query).toArray();
 
     return result;

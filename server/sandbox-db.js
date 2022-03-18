@@ -2,6 +2,7 @@ const dedicatedbrand = require('./sites/dedicatedbrand');
 const loom = require('./sites/loom');
 const db = require('./db');
 const {getDB} = require("./db");
+const db2= getDB();
 
 async function sandbox () {
   try {
@@ -72,7 +73,7 @@ async function sandbox () {
 
    //sorted product
     const sorted = await db.sort({}, {'price':1});
-    console.log("👕 ${sorted.length} total of products sorted by price");
+    console.log(`👕 ${sorted.length} total of products sorted by price`);
     console.log(sorted);
 
     db.close();
