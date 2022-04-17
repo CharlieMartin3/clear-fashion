@@ -24,6 +24,46 @@ app.listen(PORT);
 console.log(`📡 Running on port ${PORT}`);
 
 
+//ENDPOINTS 2
+// request contain limit (if not we put 10), brand and price
+app.get('/products/search', async(request, response) => {
+  
+  var match = {};
+  var queryAgg = [];
+  
+  const limit = parseInt(request.query.limit);
+  const brand = request.query.brand;
+  const price = parseInt(request.query.price);
+  var sort = parseInt(request.query.sort);
+
+  if (isNaN(sort)){ //we will sort by ascending price if there are no instruction about sorting
+    sort = 1;
+  }
+  if (brand !== undefined){
+    match["brand"] = brand;
+  }
+  if (isNaN(price)){
+  }
+  else{
+  console.log("not different");
+  match["price"] = {$lt:price};
+  }
+  if(isNaN(limit)){
+    queryAgg.push({$match : match});
+    queryAgg.push({ $sort: { price: sort } });
+    result = await db.aggregate(queryAgg);
+  }
+  else{
+    queryAgg.push({$match : match});
+    queryAgg.push({$limit : limit});
+    queryAgg.push({ $sort: { price: sort} });
+    console.log("query : ", queryAgg);
+    result = await db.aggregate(queryAgg);
+  }
+  console.log(result.length);
+  response.send({"limit" : limit, "total" : result.length, "result" : result});
+});
+
 //ENDPOINTS 1 
 //Search product by id
 app.get('/products/:id', (request, response) => {
@@ -34,40 +74,4 @@ app.get('/products/:id', (request, response) => {
                  'product': value});
   })
   
-});
-
-
-
-//ENDPOINTS 2
-// request contain limit (if not we put 10), brand and price
-app.get('/products/search', (request, response) => {
-
-  let limit = request.query.limit
-  let brand = request.query.brand
-  let price = request.query.price
-
-  if(limit == null) {limit = 10}
-
-  product = []
-  if(brand && price){
-    product = db.limit({'brand' : brand, 'price' : {$lt : parseInt(price)}}, parseInt(limit))
-  }
-  else if(brand == null && price == null){
-    product = db.limit({}, parseInt(limit))
-  }
-  else if(brand == null && price != null){
-    product = db.limit({'price' : {$lt : parseInt(price)}}, parseInt(limit))
-  }
-  else if(brand != null && price == null){
-    product = db.limit({'brand' : brand}, parseInt(limit))
-  }
-
-  product.then((value) => {
-    response.send({'limit' : limit,
-                 'brand' : brand,
-                 'price' : price,
-                 'product' : value});
-  })
-  
-
 });

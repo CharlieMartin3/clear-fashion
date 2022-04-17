@@ -24,10 +24,16 @@ const getDB = module.exports.getDB = async () => {
     client = await MongoClient.connect(MONGODB_URI, {'useNewUrlParser': true});
     database = client.db(MONGODB_DB_NAME);
 
+
+
+
+
     console.log('💽  Connected');
 
     return database;
   } catch (error) {
+    console.log('erreur ici');
+
     console.error('🚨 MongoClient.connect...', error);
     return null;
   }
@@ -41,6 +47,7 @@ const getDB = module.exports.getDB = async () => {
 module.exports.insert = async products => {
   try {
     const db = await getDB();
+    
     const collection = db.collection(MONGODB_COLLECTION);
     // More details
     // https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/#insert-several-document-specifying-an-id-field
@@ -64,6 +71,7 @@ module.exports.insert = async products => {
 module.exports.find = async query => {
   try {
     const db = await getDB();
+    //console.log(db);
     const collection = db.collection(MONGODB_COLLECTION);
     const result = await collection.find(query).toArray();
 
@@ -96,9 +104,25 @@ module.exports.sort = async (find_query, sort_query) => {
 module.exports.limit = async (find_query, limit_query) => {
   try {
     const db = await getDB();
+    
     const collection = db.collection(MONGODB_COLLECTION);
-    console.log(collection)
+    
     const result = await collection.find(find_query).sort(limit_query).toArray();
+
+    console.log(find_query)
+
+    return result;
+  } catch (error) {
+    console.error('🚨 collection.find...', error);
+    return null;
+  }
+};
+
+module.exports.aggregate = async query => {
+  try {
+    const db = await getDB();
+    const collection = db.collection(MONGODB_COLLECTION);
+    const result = await collection.aggregate(query).toArray();
 
     return result;
   } catch (error) {
