@@ -29,14 +29,14 @@ console.log(`📡 Running on port ${PORT}`);
 app.get('/products/search', async(request, response) => {
   
   var match = {};
-  var queryAgg = [];
+  var queryArguments = [];
   
   const limit = parseInt(request.query.limit);
   const brand = request.query.brand;
   const price = parseInt(request.query.price);
   var sort = parseInt(request.query.sort);
 
-  if (isNaN(sort)){ //we will sort by ascending price if there are no instruction about sorting
+  if (isNaN(sort)){ 
     sort = 1;
   }
   if (brand !== undefined){
@@ -49,16 +49,16 @@ app.get('/products/search', async(request, response) => {
   match["price"] = {$lt:price};
   }
   if(isNaN(limit)){
-    queryAgg.push({$match : match});
-    queryAgg.push({ $sort: { price: sort } });
-    result = await db.aggregate(queryAgg);
+    queryArguments.push({$match : match});
+    queryArguments.push({ $sort: { price: sort } });
+    result = await db.aggregate(queryArguments);
   }
   else{
-    queryAgg.push({$match : match});
-    queryAgg.push({$limit : limit});
-    queryAgg.push({ $sort: { price: sort} });
-    console.log("query : ", queryAgg);
-    result = await db.aggregate(queryAgg);
+    queryArguments.push({$match : match});
+    queryArguments.push({$limit : limit});
+    queryArguments.push({ $sort: { price: sort} });
+    console.log("query : ", queryArguments);
+    result = await db.aggregate(queryArguments);
   }
   console.log(result.length);
   response.send({"limit" : limit, "total" : result.length, "result" : result});

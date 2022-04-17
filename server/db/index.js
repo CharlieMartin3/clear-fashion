@@ -84,7 +84,7 @@ module.exports.find = async query => {
 
 
 
-
+//useless function associated with limit to make search request
 module.exports.sort = async (find_query, sort_query) => {
   try {
     const db = await getDB();
@@ -97,8 +97,6 @@ module.exports.sort = async (find_query, sort_query) => {
     return null;
   }
 };
-
-
 
 
 module.exports.limit = async (find_query, limit_query) => {
@@ -118,6 +116,7 @@ module.exports.limit = async (find_query, limit_query) => {
   }
 };
 
+// we going to use this function for search request :  
 module.exports.aggregate = async query => {
   try {
     const db = await getDB();
